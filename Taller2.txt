@@ -1,1 +1,21 @@
-Taller 2 Julian David Uribe
+Taller 2 Julian David Uribe- John Pineda- Daniel 
+Create 3 Tablespaces (0.2) :
+a. first one with 1 Gb and 3 datafiles, tablespace should be named "gofar_travel"
+b. second one with 500 Mb and 1 datafile, named "test_purposes".
+c. Undo tablespace with 5Mb of space and 1 datafile
+
+CREATE TABLESPACE gofar_travel datafile 
+'/u01/app/oracle/oradata/XE/gofar_travel.dbf' size 500 M,
+'/u01/app/oracle/oradata/XE/gofar_trave2.dbf' size 250 M,
+'/u01/app/oracle/oradata/XE/gofar_trave3.dbf' size 250 M;
+AUTOEXTEND ON NEXT 1000K MAXSIZE 1000M
+EXTENT MANAGEMENT LOCAL 
+SEGMENT SPACE MANAGEMENT AUTO
+ONLINE;
+
+CREATE TABLESPACE test_purposes datafile 
+'/u01/app/oracle/oradata/XE/test_purposes1.dbf' size 500 M;
+
+CREATE UNDO TABLESPACE Undo1 datafile 
+'/u01/app/oracle/oradata/XE/test_purposes1.dbf' size 5 M
+EXTEND OFF;
