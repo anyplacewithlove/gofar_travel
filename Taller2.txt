@@ -5,21 +5,27 @@ Create 3 Tablespaces (0.2) :
 ----b. second one with 500 Mb and 1 datafile, named "test_purposes".
 ----c. Undo tablespace with 5Mb of space and 1 datafile
 
-CREATE TABLESPACE gofar_travel datafile 
-'/u01/app/oracle/oradata/XE/gofar_travel.dbf' size 500 M,
-'/u01/app/oracle/oradata/XE/gofar_trave2.dbf' size 250 M,
-'/u01/app/oracle/oradata/XE/gofar_trave3.dbf' size 250 M;
+CREATE TABLESPACE gofar_travel2 datafile 
+'gofar_travel.dbf' size 500 M,
+'gofar_trave2.dbf' size 250 M,
+'gofar_trave3.dbf' size 200 M
 AUTOEXTEND ON NEXT 1000K MAXSIZE 1000M
 EXTENT MANAGEMENT LOCAL 
 SEGMENT SPACE MANAGEMENT AUTO
 ONLINE;
 
+
 CREATE TABLESPACE test_purposes datafile 
-'/u01/app/oracle/oradata/XE/test_purposes1.dbf' size 500 M;
+'test_purposes1.dbf' SIZE 100M
+AUTOEXTEND ON NEXT 100K MAXSIZE 500M
+EXTENT MANAGEMENT LOCAL 
+SEGMENT SPACE MANAGEMENT AUTO
+ONLINE;
+
 
 CREATE UNDO TABLESPACE Undo1 datafile 
-'/u01/app/oracle/oradata/XE/test_purposes1.dbf' size 5 M
-EXTEND OFF;
+'Undo1.dbf' size 5 M
+AUTOEXTEND OFF;
 
 ---3.Set the undo tablespace to be used in the system (0.2)
 ALTER SYSTEM SET Undo1 = UNDO_TBS scope = both;}
@@ -47,10 +53,10 @@ SESSIONS_PER_USER 1
 CPU_PER_SESSION UNLIMITED
 CPU_PER_CALL UNLIMITED
 CONNECT_TIME 240
-IDLE_TIME 15
+IDLE_TIME 40
 PRIVATE_SGA 20 M
 FAILED_LOGIN_ATTEMPTS 4
-PASSWORD_LIFE_TIME 40
+PASSWORD_LIFE_TIME 15
 PASSWORD_REUSE_MAX 4
 PASSWORD_LOCK_TIME 1
 PASSWORD_GRACE_TIME 2;
