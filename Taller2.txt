@@ -1,8 +1,9 @@
 Taller 2 Julian David Uribe- John Pineda- Daniel 
 Create 3 Tablespaces (0.2) :
-a. first one with 1 Gb and 3 datafiles, tablespace should be named "gofar_travel"
-b. second one with 500 Mb and 1 datafile, named "test_purposes".
-c. Undo tablespace with 5Mb of space and 1 datafile
+----1.Create 3 Tablespaces (0.2) :
+----a. first one with 1 Gb and 3 datafiles, tablespace should be named "gofar_travel"
+----b. second one with 500 Mb and 1 datafile, named "test_purposes".
+----c. Undo tablespace with 5Mb of space and 1 datafile
 
 CREATE TABLESPACE gofar_travel datafile 
 '/u01/app/oracle/oradata/XE/gofar_travel.dbf' size 500 M,
@@ -19,3 +20,54 @@ CREATE TABLESPACE test_purposes datafile
 CREATE UNDO TABLESPACE Undo1 datafile 
 '/u01/app/oracle/oradata/XE/test_purposes1.dbf' size 5 M
 EXTEND OFF;
+
+---3.Set the undo tablespace to be used in the system (0.2)
+ALTER SYSTEM SET Undo1 = UNDO_TBS scope = both;}
+
+
+--4. Create a DBA user and assign it to the tablespace called "gofar_travel", this user has unlimited space
+---on the tablespace (0.2)
+
+CREATE USER DBAUSER IDENTIFIED BY DBAUSER
+DEFAULT TABLESPACE gofar_travel
+TEMPORARY TABLESPACE TEMP
+QUOTA UNLIMITED ON gofar_travel;
+
+---5. Assign the dba role and permissions to connect to the user just created (0.2)
+
+GRANT DBA TO DBAUSER;
+GRANT CONNECT, RESOURCE TO DBAUSER;
+
+---6. Create 3 profiles. (0.2)
+---a. Profile 1: "manager " password life 40 days, one session per user, 15 minutes idle, 4 failed
+---login attempts
+
+CREATE PROFILE manager LIMIT
+SESSIONS_PER_USER 1
+CPU_PER_SESSION UNLIMITED
+CPU_PER_CALL UNLIMITED
+CONNECT_TIME 240
+IDLE_TIME 15
+PRIVATE_SGA 20 M
+FAILED_LOGIN_ATTEMPTS 4
+PASSWORD_LIFE_TIME 40
+PASSWORD_REUSE_MAX 4
+PASSWORD_LOCK_TIME 1
+PASSWORD_GRACE_TIME 2;
+
+
+---Profile 2: "finance " password life 15 days, one session per user, 3 minutes idle, 2 failed login
+---attempts
+
+CREATE PROFILE finance LIMIT
+SESSIONS_PER_USER 1
+CPU_PER_SESSION UNLIMITED
+CPU_PER_CALL UNLIMITED
+CONNECT_TIME 240
+IDLE_TIME 3
+PRIVATE_SGA 20 M
+FAILED_LOGIN_ATTEMPTS 4
+PASSWORD_LIFE_TIME 15
+PASSWORD_REUSE_MAX 2
+PASSWORD_LOCK_TIME 1
+PASSWORD_GRACE_TIME 2;
