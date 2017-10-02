@@ -62,7 +62,7 @@ PASSWORD_LOCK_TIME 1
 PASSWORD_GRACE_TIME 2;
 
 
----Profile 2: "finance " password life 15 days, one session per user, 3 minutes idle, 2 failed login
+---b. Profile 2: "finance " password life 15 days, one session per user, 3 minutes idle, 2 failed login
 ---attempts
 
 CREATE PROFILE finance LIMIT
@@ -72,8 +72,24 @@ CPU_PER_CALL UNLIMITED
 CONNECT_TIME 240
 IDLE_TIME 3
 PRIVATE_SGA 20 M
-FAILED_LOGIN_ATTEMPTS 4
+FAILED_LOGIN_ATTEMPTS 4 "Creo que aca debe ser dos (2)"
 PASSWORD_LIFE_TIME 15
 PASSWORD_REUSE_MAX 2
 PASSWORD_LOCK_TIME 1
 PASSWORD_GRACE_TIME 2;
+
+---c. Profile 3: "development " password life 100 days, two session per user, 30 minutes idle, no failed login attempts
+
+CREATE DEVELOPMENT finance LIMIT
+SESSIONS_PER_USER 2
+CPU_PER_SESSION UNLIMITED
+CPU_PER_CALL UNLIMITED
+CONNECT_TIME 240
+IDLE_TIME 30
+PRIVATE_SGA 20 M
+FAILED_LOGIN_ATTEMPTS UNLIMITED
+PASSWORD_LIFE_TIME 100
+PASSWORD_REUSE_MAX 3
+PASSWORD_LOCK_TIME 1
+PASSWORD_GRACE_TIME 2;
+
