@@ -1,5 +1,5 @@
-Taller 2 Julian David Uribe- John Pineda- Daniel Esteban Grajales 
-Create 3 Tablespaces (0.2) :
+---Taller 2 Julian David Uribe- John Pineda- Daniel Esteban Grajales 
+---Create 3 Tablespaces (0.2) :
 ----1.Create 3 Tablespaces (0.2) :
 ----a. first one with 1 Gb and 3 datafiles, tablespace should be named "gofar_travel"
 ----b. second one with 500 Mb and 1 datafile, named "test_purposes".
