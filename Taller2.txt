@@ -120,7 +120,7 @@ DEFAULT TABLESPACE gofar_travel
 QUOTA 10m ON gofar_travel
 PROFILE manager
 
-
+            
 ----8. Lock the users associate with profiles: manager and finance. (0.2)
 
 ALTER USER emunoz ACCOUNT LOCK;
