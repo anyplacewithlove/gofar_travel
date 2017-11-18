@@ -1,0 +1,85 @@
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,1,'Nuevo','Ingreso Nuevo');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,2,'Nuevo','Ingreso Nuevo');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,3,'Nuevo','Ingreso Nuevo');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,3,'Nuevo','Ingreso Nuevo');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,4,'Nuevo','Ingreso Nuevo');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,21,'Vendido','Vendido el auto');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,7,'Vendido','Vendido el auto');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,12,'Cambio','El auto fue puesto como cambio');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,3,'Cambio','El auto fue puesto como cambio');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,12,'Cambio','El auto fue puesto como cambio');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,3,'Vendido','Vendido el auto');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,19,'Nuevo','Ingreso Nuevo');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,20,'Nuevo','Ingreso Nuevo');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,16,'Nuevo','Ingreso Nuevo');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,12,'Nuevo','Ingreso Nuevo');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,1,'Cambio','El auto fue puesto como cambio');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,11,'Cambio','El auto fue puesto como cambio');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,12,'Vendido','Vendido el auto');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,19,'Vendido','Vendido el auto');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,21,'Vendido','Vendido el auto');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,17,'Vendido','Vendido el auto');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,16,'Vendido','Vendido el auto');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,1,'Vendido','Vendido el auto');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,4,'Vendido','Vendido el auto');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,5,'Cambio','El auto fue puesto como cambio');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,6,'Cambio','El auto fue puesto como cambio');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,7,'Cambio','El auto fue puesto como cambio');
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,7,'Vendido','Vendido el auto');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,8,'Cambio','El auto fue puesto como cambio');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,9,'Vendido','Vendido el auto');
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,13,'Vendido','Vendido el auto');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,14,'Cambio','El auto fue puesto como cambio');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,15,'Cambio','El auto fue puesto como cambio');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,16,'Cambio','El auto fue puesto como cambio');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,17,'Vendido','Vendido el auto');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,18,'Cambio','El auto fue puesto como cambio');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,8,'Vendido','Vendido el auto');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,8,'Nuevo','Ingreso Nuevo');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,9,'Vendido','Vendido el auto');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,12,'Cambio','El auto fue puesto como cambio');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,2,'Vendido','Vendido el auto');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,21,'Vendido','Vendido el auto');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,4,'Vendido','Vendido el auto');
+
+INSERT INTO Historial_Vehiculos (id,vehiculo_id,estado,observaciones) VALUES (IDHISTORIAL_VEHICULOS,5,'Cambio','El auto fue puesto como cambio');
