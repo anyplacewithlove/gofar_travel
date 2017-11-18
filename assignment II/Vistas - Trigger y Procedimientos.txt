@@ -1,0 +1,29 @@
+/*3. Create a view in order to display those products which are under 5 units availables, the view should have the id, the name of the product, code and the name of the manufacturer. (0.5)*/
+
+--------------------------------------------------------
+--  DDL for View ORDERNAR_PRODUCTOS_MENORES5
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE VIEW "DBAUSER"."ORDERNAR_PRODUCTOS_MENORES5" ("ID", "NOMBRE", "CODIGO", "NOMBRE_PROVEEDOR", "UNIDADES_DISPONIBLES") AS 
+  SELECT SE.ID,SE.NOMBRE,SE.CODIGO,P.NOMBRE_PROVEEDOR,SE.UNIDADES_DISPONIBLES
+  FROM SERVICIOS_EXTRA SE
+  INNER JOIN PROVEEDORES P 
+  ON SE.PROVEEDOR_ID= P.ID
+  WHERE SE.UNIDADES_DISPONIBLES < 5
+  ORDER BY SE.UNIDADES_DISPONIBLES DESC
+;
+
+/*4. Create a trigger which decreases the number of units available after the product has been associated to one bill. (0.5)*/
+
+--------------------------------------------------------
+--  DDL for Trigger DECREMENTAR_PRODUCTOS
+--------------------------------------------------------
+
+  CREATE OR REPLACE TRIGGER "DBAUSER"."DECREMENTAR_PRODUCTOS" 
+   AFTER INSERT OR UPDATE ON detalle_facturas 
+   FOR EACH ROW
+   BEGIN
+    update SERVICIOS_EXTRA
+    set unidades_disponibles = unidades_disponibles-:new.cantidad
+    where id=:new.codigo_servicio_extra_id;
+   END;
