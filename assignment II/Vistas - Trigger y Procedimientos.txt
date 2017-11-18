@@ -27,3 +27,57 @@
     set unidades_disponibles = unidades_disponibles-:new.cantidad
     where id=:new.codigo_servicio_extra_id;
    END;
+
+/*5. Create a procedure called "reorder_units", inside the procedure you should call the view created in the
+step #3, for each element returned, the value of "units_available" should be increased in 20 units by
+default. (0.5)*/
+
+--------------------------------------------------------
+--  DDL for Procedure REORDER_UNITS
+--------------------------------------------------------
+set define off;
+
+  CREATE OR REPLACE PROCEDURE "DBAUSER"."REORDER_UNITS" as
+ -- unidades_disponibles number;
+begin
+
+update servicios_Extra x
+set x.UNIDADES_DISPONIBLES = (select   (se.unidades_disponibles+20) as units
+                                from servicios_Extra se
+                                    inner join  ORDERNAR_PRODUCTOS_MENORES5 o on o.id = se.id
+                                    where se.id = x.id)
+where x.id = (select   se.id
+                                from servicios_Extra se
+                                    inner join  ORDERNAR_PRODUCTOS_MENORES5 o on o.id = se.id
+                                    where se.id = x.id);
+end;
+
+
+/*6. Create a view with the following columns (bill_id, sales_person_id, name_of_salesperson, client_id, name_of_client, vehicle_id, brand_of_vehicle, manufacturer_of_vehicle, accesory_id,
+name_of_accesory). The idea is you can add outside the view 'where bill_id = xx' and displays the information associated to a bill including its details (accessories). (0.5)*/
+
+
+--------------------------------------------------------
+--  DDL for View DETALLE_DE_FACTURAS
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE VIEW "DBAUSER"."DETALLE_DE_FACTURAS" ("ID", "VENDEDOR_ID", "Nombre Vendedor", " Vendedor Id", "Nombre Cliente ", "VEHICULO_ID", "MARCA", "NOMBRE_FABRICANTE", "Servicio Extra Id", "NOMBRE") AS 
+  SELECT F.ID,F.VENDEDOR_ID,VE.NOMBRE || VE.APELLIDO as "Nombre Vendedor",C.ID as " Vendedor Id",
+  C.NOMBRE  || C.APELLIDO as "Nombre Cliente ",
+  F.VEHICULO_ID,M.MARCA,FA.NOMBRE_FABRICANTE,SE.ID as "Servicio Extra Id",SE.NOMBRE
+  FROM FACTURAS F
+  INNER JOIN VENDEDORES VE
+  ON F.VENDEDOR_ID=VE.ID
+  INNER JOIN CLIENTES C
+  ON F.CLIENTE_ID=C.ID
+  INNER JOIN VEHICULOS VE
+  ON F.VEHICULO_ID=VE.ID
+  INNER JOIN MARCAS M
+  ON VE.MARCA_ID=M.ID
+  INNER JOIN FABRICANTES FA
+  ON VE.FABRICANTE_ID=FA.ID
+  INNER JOIN DETALLE_FACTURAS DF
+  ON DF.FACTURA_ID =F.ID
+  INNER JOIN SERVICIOS_EXTRA SE
+  ON DF.CODIGO_SERVICIO_EXTRA_ID=SE.ID
+;

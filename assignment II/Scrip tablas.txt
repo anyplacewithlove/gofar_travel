@@ -1,0 +1,353 @@
+/*******Creacion de las tablas********/
+CREATE TABLE clientes(
+id int NOT NULL PRIMARY KEY,
+cedula varchar(20) NOT NULL,
+nombre varchar(50) NOT NULL,
+apellido varchar(50) NOT NULL,
+direccion varchar(50) NOT NULL,
+telefono varchar(50) NOT NULL,
+tipo_identificacion_id int
+);
+
+CREATE TABLE tipo_identificaciones (
+id int NOT NULL PRIMARY KEY,
+tipo_identificacion varchar (50)
+);
+
+CREATE TABLE vehiculos(
+id int NOT NULL PRIMARY KEY,
+placa varchar(20) NOT NULL,
+año varchar(50) NOT NULL,
+fabricante_id int NOT NULL,
+valor varchar(50) NOT NULL,
+tipo varchar(50) NOT NULL,
+marca_id int  NOT NULL
+);
+
+CREATE TABLE Marcas(
+id int NOT NULL PRIMARY KEY,
+marca varchar(50),
+modelo varchar(50)
+);
+
+CREATE TABLE vehiculos_intercambio (
+id int NOT NULL PRIMARY KEY,
+placa varchar(20) NOT NULL,
+ano varchar(50) NOT NULL,
+valor decimal,
+marca_id int,
+fabricante_id int
+
+);
+
+CREATE TABLE Servicios_Extra (
+  id          int    PRIMARY KEY,
+  codigo  VARCHAR(250)  NOT NULL,
+  nombre  VARCHAR(250)  NOT NULL,
+  costo  VARCHAR(250)  NOT NULL,
+  proveedor_id  INT  NOT NULL,
+  valor_venta  VARCHAR(250)  NOT NULL,
+  unidades_disponibles INT NOT NULL DEFAULT(30));
+
+CREATE TABLE fabricantes(
+id int NOT NULL PRIMARY KEY,
+nombre_fabricante varchar(50) NOT NULL
+);
+
+CREATE TABLE proveedores(
+  id          int    PRIMARY KEY,
+  codigo_proveedor  VARCHAR(250)  NOT NULL,
+  nombre_proveedor  VARCHAR(250)  NOT NULL);
+  
+  CREATE TABLE impuestos (
+  id          int    PRIMARY KEY,
+  nombre_impuesto  VARCHAR(250)  NOT NULL,
+  valor_impuesto  VARCHAR(250)  NOT NULL);
+  
+  
+  
+  CREATE TABLE Vendedores (
+  id          int    PRIMARY KEY,
+  cedula_vendedor  VARCHAR(250)  NOT NULL,
+  nombre  VARCHAR(250)  NOT NULL,
+  apellido  VARCHAR(250)  NOT NULL,
+  direccion  VARCHAR(250)  NOT NULL,
+  telefono  VARCHAR(250)  NOT NULL,
+  estado  VARCHAR(250)  NOT NULL);
+  
+  CREATE TABLE Facturas (
+  id          int    PRIMARY KEY,
+  codigo_factura  VARCHAR(250)  NOT NULL,
+  fecha_factura  DATE NOT NULL,
+  vendedor_id  int NOT NULL,
+  cliente_id  int  NOT NULL,
+  valor_subtotal  DECIMAL  NOT NULL,
+  impuesto_id  int NOT NULL,
+  vehiculo_id  int NOT NULL,
+  vehiculo_intercambio_id int NOT NULL,
+  valor_matricula DECIMAL  NOT NULL);
+  
+  CREATE TABLE Detalle_Facturas (
+  id          int    PRIMARY KEY,
+  factura_id  int  NOT NULL,
+  codigo_servicio_extra_id  int NOT NULL,
+  cantidad  int NOT NULL,
+  valor_unitario  DECIMAL  NOT NULL);
+    
+  CREATE TABLE Historial_Vehiculos (
+  id          int    PRIMARY KEY,
+  vehiculo_id int,
+  estado VARCHAR (50),
+  observaciones VARCHAR (250));
+
+
+/*******Agregando Claves Foraneas********/
+ALTER TABLE CLIENTES
+ADD FOREIGN KEY (tipo_identificacion_id) 
+REFERENCES  tipo_identificaciones  (id);
+
+ALTER TABLE VEHICULOS
+ADD FOREIGN KEY (marca_id) 
+REFERENCES marcas (id);
+
+ALTER TABLE VEHICULOS
+ADD FOREIGN KEY (fabricante_id) 
+REFERENCES fabricantes (id);
+
+ALTER TABLE Historial_Vehiculos
+ADD FOREIGN KEY (vehiculo_id) 
+REFERENCES Vehiculos (id);
+
+ALTER TABLE VEHICULOS_INTERCAMBIO
+ADD FOREIGN KEY (marca_id) 
+REFERENCES marcas (id);
+
+ALTER TABLE Servicios_Extra
+ADD FOREIGN KEY (proveedor_id) 
+REFERENCES proveedores(id);
+  
+ALTER TABLE Facturas
+ADD FOREIGN KEY (vendedor_id) 
+REFERENCES Vendedores(id);
+
+ALTER TABLE Facturas
+ADD FOREIGN KEY (cliente_id) 
+REFERENCES Clientes(id);
+
+ALTER TABLE Facturas
+ADD FOREIGN KEY (impuesto_id) 
+REFERENCES Impuestos(id);
+
+ALTER TABLE Facturas
+ADD FOREIGN KEY (vehiculo_id) 
+REFERENCES Vehiculos(id);
+
+ALTER TABLE Facturas
+ADD FOREIGN KEY (vehiculo_intercambio_id) 
+REFERENCES Vehiculos_Intercambio(id);
+  
+ALTER TABLE Detalle_Facturas
+ADD FOREIGN KEY (factura_id) 
+REFERENCES Facturas(id);
+
+ALTER TABLE Detalle_Facturas
+ADD FOREIGN KEY (codigo_servicio_extra_id) 
+REFERENCES Servicios_Extra(id);
+/*******Creacion de secuencias para ID********/
+CREATE SEQUENCE IDCLIENTES
+INCREMENT BY 1
+START WITH 1 MINVALUE 1;
+
+CREATE SEQUENCE IDVEHICULOS
+INCREMENT BY 1
+START WITH 1 MINVALUE 1;
+
+CREATE SEQUENCE IDVEHICULOS_INTERCAMBIO
+INCREMENT BY 1
+START WITH 1 MINVALUE 1;
+
+CREATE SEQUENCE IDFABRICANTES
+INCREMENT BY 1
+START WITH 1 MINVALUE 1;
+
+CREATE SEQUENCE IDMARCAS
+INCREMENT BY 1
+START WITH 1 MINVALUE 1;
+
+CREATE SEQUENCE IDTIPO_IDENTIFICACIONES
+INCREMENT BY 1
+START WITH 1 MINVALUE 1;
+
+CREATE SEQUENCE IDSERVICIOS_EXTRA
+INCREMENT BY 1
+START WITH 1 MINVALUE 1;
+  
+CREATE SEQUENCE IDPROVEEDORES
+INCREMENT BY 1
+START WITH 1 MINVALUE 1;
+  
+CREATE SEQUENCE IDIMPUESTOS
+INCREMENT BY 1
+START WITH 1 MINVALUE 1;
+  
+CREATE SEQUENCE IDVENDEDOR
+INCREMENT BY 1
+START WITH 1 MINVALUE 1;
+  
+CREATE SEQUENCE IDFACTURAS
+INCREMENT BY 1
+START WITH 1 MINVALUE 1;
+
+CREATE SEQUENCE IDDETALLE_FACTURAS
+INCREMENT BY 1
+START WITH 1 MINVALUE 1;
+
+CREATE SEQUENCE IDHISTORIAL_VEHICULOS
+INCREMENT BY 1
+START WITH 1 MINVALUE 1;
+
+/*******Condiciones********/
+ alter table HISTORIAL_VEHICULOS
+ add constraint CK_ESTADO_VEHICULOS
+ check (estado in ('Nuevo','Cambio', 'Vendido'));
+
+/*******Insertar********/
+/*******Impuesto********/
+
+INSERT INTO Impuestos (id,nombre_impuesto,valor_impuesto) VALUES (IDIMPUESTOS.NEXTVAL,'taxes',7);
+/*******Fabricantes********/
+
+INSERT INTO Fabricantes (id,nombre_fabricante) VALUES (IDFABRICANTES.NEXTVAL, 'full	car');
+INSERT INTO Fabricantes (id,nombre_fabricante)	VALUES (IDFABRICANTES.NEXTVAL, 'micro motor');
+INSERT INTO Fabricantes (id,nombre_fabricante)	VALUES (IDFABRICANTES.NEXTVAL, 'autos macarena');
+/*******Tipos de indentificacion********/
+
+INSERT INTO Tipo_identificaciones (id,tipo_identificacion) VALUES (IDTIPO_IDENTIFICACIONES.NEXTVAL,'cedula extranjeria');
+INSERT INTO Tipo_identificaciones (id,tipo_identificacion) VALUES (IDTIPO_IDENTIFICACIONES.NEXTVAL,'cedula ciudadania');
+
+
+/*******Marcas********/
+
+INSERT INTO Marcas (id,marca,modelo) VALUES (IDMARCAS.NEXTVAL,'chevrolet','ultimate');
+INSERT INTO Marcas (id,marca,modelo) VALUES (IDMARCAS.NEXTVAL,'nissan','panda');
+INSERT INTO Marcas (id,marca,modelo) VALUES (IDMARCAS.NEXTVAL,'hiunday','cx');
+INSERT INTO Marcas (id,marca,modelo) VALUES (IDMARCAS.NEXTVAL,'kia','optima');
+INSERT INTO Marcas (id,marca,modelo) VALUES (IDMARCAS.NEXTVAL,'chevrolet','revolution');
+INSERT INTO Marcas (id,marca,modelo) VALUES (IDMARCAS.NEXTVAL,'renault','clio');
+
+
+/*******vehiculos********/
+INSERT INTO Vehiculos (id,placa,año,fabricante_id,valor,tipo,marca_id) VALUES (IDVEHICULOS.NEXTVAL,'RJB 722',1999,'2',17000000,'nuevo','2');
+INSERT INTO Vehiculos (id,placa,año,fabricante_id,valor,tipo,marca_id) VALUES (IDVEHICULOS.NEXTVAL,'UZA 297',2000,'3',17470000,'nuevo','1');
+INSERT INTO Vehiculos (id,placa,año,fabricante_id,valor,tipo,marca_id) VALUES (IDVEHICULOS.NEXTVAL,'FVV 419',2001,'2',17940000,'usado','1');
+INSERT INTO Vehiculos (id,placa,año,fabricante_id,valor,tipo,marca_id) VALUES (IDVEHICULOS.NEXTVAL,'EHF 791',2002,'3',18410000,'usado','6');
+INSERT INTO Vehiculos (id,placa,año,fabricante_id,valor,tipo,marca_id) VALUES (IDVEHICULOS.NEXTVAL,'MPZ 968',2003,'2',18880000,'usado','3');
+INSERT INTO Vehiculos (id,placa,año,fabricante_id,valor,tipo,marca_id) VALUES (IDVEHICULOS.NEXTVAL,'RIB 193',2004,'1',19350000,'usado','3');
+INSERT INTO Vehiculos (id,placa,año,fabricante_id,valor,tipo,marca_id) VALUES (IDVEHICULOS.NEXTVAL,'NSL 881',2005,'1',19820000,'nuevo','4');
+INSERT INTO Vehiculos (id,placa,año,fabricante_id,valor,tipo,marca_id) VALUES (IDVEHICULOS.NEXTVAL,'SXZ 984',2006,'3',20290000,'usado','2');
+INSERT INTO Vehiculos (id,placa,año,fabricante_id,valor,tipo,marca_id) VALUES (IDVEHICULOS.NEXTVAL,'YKY 462',2007,'2',20760000,'usado','6');
+INSERT INTO Vehiculos (id,placa,año,fabricante_id,valor,tipo,marca_id) VALUES (IDVEHICULOS.NEXTVAL,'BYY 576',2008,'2',21230000,'nuevo','6');
+INSERT INTO Vehiculos (id,placa,año,fabricante_id,valor,tipo,marca_id) VALUES (IDVEHICULOS.NEXTVAL,'PFR 031',2009,'3',21700000,'nuevo','1');
+INSERT INTO Vehiculos (id,placa,año,fabricante_id,valor,tipo,marca_id) VALUES (IDVEHICULOS.NEXTVAL,'UCJ 552',2010,'3',22170000,'usado','6');
+INSERT INTO Vehiculos (id,placa,año,fabricante_id,valor,tipo,marca_id) VALUES (IDVEHICULOS.NEXTVAL,'KIT 395',2011,'2',22640000,'usado','1');
+INSERT INTO Vehiculos (id,placa,año,fabricante_id,valor,tipo,marca_id) VALUES (IDVEHICULOS.NEXTVAL,'IJO 756',2012,'2',23110000,'nuevo','4');
+INSERT INTO Vehiculos (id,placa,año,fabricante_id,valor,tipo,marca_id) VALUES (IDVEHICULOS.NEXTVAL,'OGG 476',2013,'1',23580000,'usado','2');
+INSERT INTO Vehiculos (id,placa,año,fabricante_id,valor,tipo,marca_id) VALUES (IDVEHICULOS.NEXTVAL,'HGX 302',2014,'1',24050000,'usado','4');
+INSERT INTO Vehiculos (id,placa,año,fabricante_id,valor,tipo,marca_id) VALUES (IDVEHICULOS.NEXTVAL,'JVQ 423',2015,'1',24520000,'nuevo','2');
+INSERT INTO Vehiculos (id,placa,año,fabricante_id,valor,tipo,marca_id) VALUES (IDVEHICULOS.NEXTVAL,'YTT 574',2016,'2',24990000,'nuevo','1');
+INSERT INTO Vehiculos (id,placa,año,fabricante_id,valor,tipo,marca_id) VALUES (IDVEHICULOS.NEXTVAL,'UQX 050',2017,'2',25460000,'usado','3');
+INSERT INTO Vehiculos (id,placa,año,fabricante_id,valor,tipo,marca_id) VALUES (IDVEHICULOS.NEXTVAL,'UEQ 017',2018,'3',25930000,'usado','4');
+INSERT INTO Vehiculos (id,placa,año,fabricante_id,valor,tipo,marca_id) VALUES (IDVEHICULOS.NEXTVAL,'HAU 279',2019,'2',26400000,'usado','2');
+/*******Clientes********/
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847000,'Price','grajales','2286275 Erat, Rd.','16154481614','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847001,'Quinn','florez','Ap #4091432 Nibh Av.','18874667509','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847002,'Hiroko','vasquez','951982 Magna Rd.','16891156091','1');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847003,'Frances','echeverry','2052939 Quis, St.','12498528164','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847004,'Kelly','grajales','8212320 Bibendum Street','11643094012','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847005,'Buffy','bedoya','4786 Quisque Avenue','11055448066','1');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847006,'Kato','uribe','2812 Eget Av.','19647298673','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847007,'Shea','ramirez','Ap #7516184 Vivamus Rd.','14869890948','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847008,'Reece','marin','Ap #2673712 Tincidunt St.','12633142660','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847009,'Simone','ramirez','9147 Ut Rd.','12231619935','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847010,'Knox','echeverry','2270 Lorem Avenue','13962899474','1');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847011,'Keane','posada','Ap #9862392 Pede. Avenue','15849148044','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847012,'Wilma','pineda','Ap #4527993 Lorem Avenue','19392470173','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847013,'Nathan','bedoya','Ap #4156211 Lorem Rd.','17156552925','1');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847014,'Dora','florez','1013893 Amet Avenue','15266939460','1');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847015,'Cyrus','bedoya','P.O. Box 609, 8449 Mus. Avenue','15847870137','1');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847016,'Zelenia','grajales','3947719 Donec St.','12356551583','1');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847017,'Wynter','pineda','P.O. Box 355, 3629 Consequat Street','15135420473','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847018,'Megan','monsalve','1883036 Odio Ave','14956907769','1');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847019,'Teegan','vasquez','7841 Arcu. Ave','17776884962','1');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847020,'Gil','suarez','2891449 Id St.','19825973972','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847021,'Donovan','agudelo','2666 Nibh. St.','17452570340','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847022,'Rashad','posada','5119 Enim St.','14736892887','1');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847023,'Oprah','florez','7086 Morbi Rd.','14174900065','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847024,'Regan','pineda','P.O. Box 622, 3544 Eleifend Road','12491502498','1');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847025,'Allen','cardona','P.O. Box 106, 8678 Eget Rd.','12699422512','1');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847026,'Simone','marin','6942 Sit Av.','13487873356','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847027,'Colorado','alzate','9126870 Ac Rd.','16711266820','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847028,'Duncan','jimenez','P.O. Box 708, 1711 Lorem, Rd.','13825757341','1');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847029,'Mia','cardona','P.O. Box 309, 6258 Tristique St.','15134349521','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847030,'Ignatius','jaramillo','Ap #2334870 Ornare, Rd.','19876861054','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847031,'Ignatius','jimenez','P.O. Box 379, 4827 Nascetur Av.','19155041249','1');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847032,'Boris','alzate','1620 Arcu. Av.','16838017753','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847033,'Kalia','marin','P.O. Box 213, 7331 Fringilla St.','16312734608','1');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847034,'Wyatt','jimenez','3038398 Urna. Rd.','19967736445','1');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847035,'Akeem','posada','8884524 Dui Av.','12605991427','1');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847036,'Alfonso','posada','7665010 Vitae St.','16968642573','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847037,'David','uribe','Ap #5673805 Posuere Road','13821287277','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847038,'Byron','alzate','2331 Mauris Ave','16936041510','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847039,'Warren','posada','P.O. Box 208, 3661 Mus. Street','19027114587','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847040,'Murphy','jaramillo','7896 Nisi. Ave','12653249261','1');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847041,'Kamal','cardona','2858374 Et Ave','18942482999','1');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847042,'Martin','uribe','2222 Eu Rd.','17198691500','1');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847043,'Lacey','alzate','Ap #2323921 Integer St.','19507320886','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847044,'Hamish','marin','P.O. Box 663, 4525 Consectetuer, Av.','11758686526','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847045,'Stone','grajales','Ap #1364126 Tincidunt St.','17947551353','1');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847046,'Hammett','grajales','9953 Blandit. Rd.','17027221982','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847047,'Nicholas','bedoya','Ap #5636287 Facilisi. Rd.','17288726189','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847048,'Branden','ramirez','2268767 Gravida. Avenue','13879148842','2');
+INSERT INTO Clientes (id,cedula,nombre,apellido,direccion,telefono,tipo_identificacion_id) VALUES (IDCLIENTES.NEXTVAL,112847049,'Daphne','posada','9682196 Eu, 
+Rd.','17214877839','2');
+
+
+/*******Vendedores ********/
+INSERT INTO Vendedores (id,cedula_vendedor,nombre,apellido,direccion,telefono,estado) VALUES (IDVENDEDOR.NEXTVAL,42990900,'Emery','ruiz','P.O. Box 290, 7482 Sagittis. St.','24459076','activo');
+INSERT INTO Vendedores (id,cedula_vendedor,nombre,apellido,direccion,telefono,estado) VALUES (IDVENDEDOR.NEXTVAL,42990979,'Meghan','arboleda','9136 Convallis Av.','52233648','activo');
+INSERT INTO Vendedores (id,cedula_vendedor,nombre,apellido,direccion,telefono,estado) VALUES (IDVENDEDOR.NEXTVAL,42991058,'Nevada','henado','298-4430 Consectetuer Rd.','15815162','activo');
+INSERT INTO Vendedores (id,cedula_vendedor,nombre,apellido,direccion,telefono,estado) VALUES (IDVENDEDOR.NEXTVAL,42991137,'Jin','rincon','Ap #243-3019 Vel Street','08818113','activo');
+INSERT INTO Vendedores (id,cedula_vendedor,nombre,apellido,direccion,telefono,estado) VALUES (IDVENDEDOR.NEXTVAL,42991216,'Justina','angel','P.O. Box 627, 2011 Dis Road','02239747','inactivo');
+
+
+/*******Intercambio ********/
+
+INSERT INTO Vehiculos_intercambio (id,placa,marca_id,ano,valor) VALUES (IDVEHICULOS_INTERCAMBIO.NEXTVAL,'ZYL 708',1,1999,9500000);
+INSERT INTO Vehiculos_intercambio (id,placa,marca_id,ano,valor) VALUES (IDVEHICULOS_INTERCAMBIO.NEXTVAL,'ZUK 044',1,2000,9780000);
+INSERT INTO Vehiculos_intercambio (id,placa,marca_id,ano,valor) VALUES (IDVEHICULOS_INTERCAMBIO.NEXTVAL,'CMP 987',3,2001,10060000);
+INSERT INTO Vehiculos_intercambio (id,placa,marca_id,ano,valor) VALUES (IDVEHICULOS_INTERCAMBIO.NEXTVAL,'FMM 441',4,2002,10340000);
+
+/*******Facturas********/
+
+
+INSERT INTO Facturas (id,codigo_factura,fecha_factura,vendedor_id,cliente_id,valor_subtotal,impuesto_id,vehiculo_id,vehiculo_intercambio_id,valor_matricula) VALUES (IDFACTURAS.NEXTVAL,'69009','03-10-17','1','1',18000000,'1','1','4',240000);
+INSERT INTO Facturas (id,codigo_factura,fecha_factura,vendedor_id,cliente_id,valor_subtotal,impuesto_id,vehiculo_id,vehiculo_intercambio_id,valor_matricula) VALUES (IDFACTURAS.NEXTVAL,'90293','11-11-16','4','43',18355000,'1','3','3',250000);
+INSERT INTO Facturas (id,codigo_factura,fecha_factura,vendedor_id,cliente_id,valor_subtotal,impuesto_id,vehiculo_id,vehiculo_intercambio_id,valor_matricula) VALUES (IDFACTURAS.NEXTVAL,'88041','01-12-17','4','19',18710000,'1','6','4',260000);
+INSERT INTO Facturas (id,codigo_factura,fecha_factura,vendedor_id,cliente_id,valor_subtotal,impuesto_id,vehiculo_id,vehiculo_intercambio_id,valor_matricula) VALUES (IDFACTURAS.NEXTVAL,'70985','09-02-17','3','18',19065000,'1','5','2',270000);
+INSERT INTO Facturas (id,codigo_factura,fecha_factura,vendedor_id,cliente_id,valor_subtotal,impuesto_id,vehiculo_id,vehiculo_intercambio_id,valor_matricula) VALUES (IDFACTURAS.NEXTVAL,'88345','08-06-17','2','32',19420000,'1','4','2',280000);
+INSERT INTO Facturas (id,codigo_factura,fecha_factura,vendedor_id,cliente_id,valor_subtotal,impuesto_id,vehiculo_id,vehiculo_intercambio_id,valor_matricula) VALUES (IDFACTURAS.NEXTVAL,'97854','02-03-17','4','31',19775000,'1','5','3',290000);
+INSERT INTO Facturas (id,codigo_factura,fecha_factura,vendedor_id,cliente_id,valor_subtotal,impuesto_id,vehiculo_id,vehiculo_intercambio_id,valor_matricula) VALUES (IDFACTURAS.NEXTVAL,'87147','12-02-16','1','17',20130000,'1','5','3',300000);
+INSERT INTO Facturas (id,codigo_factura,fecha_factura,vendedor_id,cliente_id,valor_subtotal,impuesto_id,vehiculo_id,vehiculo_intercambio_id,valor_matricula) VALUES (IDFACTURAS.NEXTVAL,'50437','02-09-17','3','24',20485000,'1','3','3',310000);
+INSERT INTO Facturas (id,codigo_factura,fecha_factura,vendedor_id,cliente_id,valor_subtotal,impuesto_id,vehiculo_id,vehiculo_intercambio_id,valor_matricula) VALUES (IDFACTURAS.NEXTVAL,'68303','06-09-17','1','24',20840000,'1','1','4',320000);
+INSERT INTO Facturas (id,codigo_factura,fecha_factura,vendedor_id,cliente_id,valor_subtotal,impuesto_id,vehiculo_id,vehiculo_intercambio_id,valor_matricula) VALUES (IDFACTURAS.NEXTVAL,'43719','10-11-16','4','35',21195000,'1','6','1',330000);
+INSERT INTO Facturas (id,codigo_factura,fecha_factura,vendedor_id,cliente_id,valor_subtotal,impuesto_id,vehiculo_id,vehiculo_intercambio_id,valor_matricula) VALUES (IDFACTURAS.NEXTVAL,'36498','08-08-17','2','15',21550000,'1','2','2',340000);
+INSERT INTO Facturas (id,codigo_factura,fecha_factura,vendedor_id,cliente_id,valor_subtotal,impuesto_id,vehiculo_id,vehiculo_intercambio_id,valor_matricula) VALUES (IDFACTURAS.NEXTVAL,'32649','11-11-16','2','10',21905000,'1','2','4',350000);
+INSERT INTO Facturas (id,codigo_factura,fecha_factura,vendedor_id,cliente_id,valor_subtotal,impuesto_id,vehiculo_id,vehiculo_intercambio_id,valor_matricula) VALUES (IDFACTURAS.NEXTVAL,'06546','01-07-17','1','3',22260000,'1','3','2',360000);
+INSERT INTO Facturas (id,codigo_factura,fecha_factura,vendedor_id,cliente_id,valor_subtotal,impuesto_id,vehiculo_id,vehiculo_intercambio_id,valor_matricula) VALUES (IDFACTURAS.NEXTVAL,'93376','06-09-17','4','24',22615000,'1','4','4',370000);
+INSERT INTO Facturas (id,codigo_factura,fecha_factura,vendedor_id,cliente_id,valor_subtotal,impuesto_id,vehiculo_id,vehiculo_intercambio_id,valor_matricula) VALUES (IDFACTURAS.NEXTVAL,'40462','08-06-17','3','26',22970000,'1','2','3',380000);
+INSERT INTO Facturas (id,codigo_factura,fecha_factura,vendedor_id,cliente_id,valor_subtotal,impuesto_id,vehiculo_id,vehiculo_intercambio_id,valor_matricula) VALUES (IDFACTURAS.NEXTVAL,'76548','22-09-17','4','50',23325000,'1','6','3',390000);
+INSERT INTO Facturas (id,codigo_factura,fecha_factura,vendedor_id,cliente_id,valor_subtotal,impuesto_id,vehiculo_id,vehiculo_intercambio_id,valor_matricula) VALUES (IDFACTURAS.NEXTVAL,'72166','08-05-17','3','2',23680000,'1','5','3',400000);
+INSERT INTO Facturas (id,codigo_factura,fecha_factura,vendedor_id,cliente_id,valor_subtotal,impuesto_id,vehiculo_id,vehiculo_intercambio_id,valor_matricula) VALUES (IDFACTURAS.NEXTVAL,'48606','09-01-17','2','38',24035000,'1','4','3',410000);
+INSERT INTO Facturas (id,codigo_factura,fecha_factura,vendedor_id,cliente_id,valor_subtotal,impuesto_id,vehiculo_id,vehiculo_intercambio_id,valor_matricula) VALUES (IDFACTURAS.NEXTVAL,'51799','06-09-17','2','34',24390000,'1','5','2',420000);
+INSERT INTO Facturas (id,codigo_factura,fecha_factura,vendedor_id,cliente_id,valor_subtotal,impuesto_id,vehiculo_id,vehiculo_intercambio_id,valor_matricula) VALUES (IDFACTURAS.NEXTVAL,'15037','05-08-17','1','28',24745000,'1','1','3',430000);
+INSERT INTO Facturas (id,codigo_factura,fecha_factura,vendedor_id,cliente_id,valor_subtotal,impuesto_id,vehiculo_id,vehiculo_intercambio_id,valor_matricula) VALUES (IDFACTURAS.NEXTVAL,'33300','08-08-17','3','10',25100000,'1','6','1',440000);
