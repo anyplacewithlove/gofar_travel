@@ -97,25 +97,25 @@ PASSWORD_GRACE_TIME 2;
 ---users, all the users should be allow to connect to the database (0.2)
 
 CREATE USER jpineda
-IDENTIDFIED BY jpineda123
+IDENTIFIED BY jpineda123
 DEFAULT TABLESPACE gofar_travel
 QUOTA 10m ON gofar_travel
 PROFILE manager
 
 CREATE USER juribe
-IDENTIDFIED BY juribe123
+IDENTIFIED BY juribe123
 DEFAULT TABLESPACE gofar_travel
 QUOTA 10m ON gofar_travel
 PROFILE finance
 
 CREATE USER dgrajales
-IDENTIDFIED BY dgrajales123
+IDENTIFIED BY dgrajales123
 DEFAULT TABLESPACE gofar_travel
 QUOTA 10m ON gofar_travel
 PROFILE development
 
 CREATE USER emunoz
-IDENTIDFIED BY emunoz123
+IDENTIFIED BY emunoz123
 DEFAULT TABLESPACE gofar_travel
 QUOTA 10m ON gofar_travel
 PROFILE manager
